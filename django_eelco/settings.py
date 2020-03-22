@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,10 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG')
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -75,15 +75,22 @@ WSGI_APPLICATION = 'django_eelco.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_DB'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
     }
 }
+DATABASES['default'] = dj_database_url.config(env='DEV_DB_URL', conn_max_age=600)
 
+if os.environ.get('DJANGO_PRODUCTION') == 'true':
+    DEBUG = False
+    POSTGRES_URL = 'postgres://{}:{}@{}:{}/{}'.format(
+            os.environ.get('POSTGRES_USER'),
+            os.environ.get('POSTGRES_PASSWORD'),
+            os.environ.get('POSTGRES_HOST'),
+            os.environ.get('POSTGRES_PORT'),
+            os.environ.get('POSTGRES_DB')
+    )
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DATABASES['default'] = dj_database_url.parse(POSTGRES_URL, conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

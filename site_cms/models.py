@@ -1,23 +1,17 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.sites.models import Site
 
 import uuid
 
 # Create your models here.
-class Site(models.Model):
+class Siteinfo(models.Model):
     name = models.CharField(max_length=200, help_text='Enter site name')
     title = models.CharField(max_length=200, help_text='Enter site title')
     owner = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     tagline = models.CharField(max_length=200, help_text='Enter site tagline')
-    domains = models.ManyToManyField('Sitedomain', blank=True)
+    domains = models.ManyToManyField(Site)
     description = models.CharField(max_length=200, help_text='Enter site description')
-    def __str__(self):
-        """String for representing the Model object."""
-        return self.name
-
-class Sitedomain(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for domain')
-    name = models.CharField(max_length=255, help_text='Enter domain name')
     def __str__(self):
         """String for representing the Model object."""
         return self.name
@@ -44,7 +38,7 @@ class Attachment(models.Model):
 
 class Content(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for post')
-    site = models.ForeignKey('Site', on_delete=models.SET_NULL, null=True)
+    siteinfo = models.ForeignKey('Siteinfo', on_delete=models.SET_NULL, null=True)
     ctype = models.IntegerField(choices=Contenttype.choices)
     body = models.TextField(help_text='Enter content here')
     attachments = models.ManyToManyField('Attachment', blank=True)

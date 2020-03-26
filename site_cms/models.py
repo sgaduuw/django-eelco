@@ -1,4 +1,7 @@
 from django.db import models
+from django.urls import reverse
+
+import uuid
 
 # Create your models here.
 class Site(models.Model):
@@ -6,7 +9,7 @@ class Site(models.Model):
     title = models.CharField(max_length=200, help_text='Enter site title')
     owner = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     tagline = models.CharField(max_length=200, help_text='Enter site tagline')
-    description = models.CharField(max_length=200, help_text='Enter site tagline')
+    description = models.CharField(max_length=200, help_text='Enter site description')
     def __str__(self):
         """String for representing the Model object."""
         return self.name
@@ -32,6 +35,7 @@ class Attachment(models.Model):
         return self.name
 
 class Content(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for post')
     site = models.ForeignKey('Site', on_delete=models.SET_NULL, null=True)
     ctype = models.IntegerField(choices=Contenttype.choices)
     body = models.TextField(help_text='Enter content here')
@@ -50,7 +54,7 @@ class ContentMeta(models.Model):
     slug = models.SlugField(max_length=50, help_text='Enter slug', blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
     categories = models.ManyToManyField('Category', blank=True)
-    image = models.ImageField(upload_to='uploads/%Y/%m/%d/', null=True, blank=True)
+    image = models.ImageField(upload_to='pageimage/%Y/%m/%d/', null=True, blank=True)
     def __str__(self):
         """String for representing the Model object."""
         return self.title

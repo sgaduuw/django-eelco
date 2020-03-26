@@ -9,7 +9,15 @@ class Site(models.Model):
     title = models.CharField(max_length=200, help_text='Enter site title')
     owner = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     tagline = models.CharField(max_length=200, help_text='Enter site tagline')
+    domains = models.ManyToManyField('Sitedomain', blank=True)
     description = models.CharField(max_length=200, help_text='Enter site description')
+    def __str__(self):
+        """String for representing the Model object."""
+        return self.name
+
+class Sitedomain(models.Model):
+    id = models.UUIDField(primary_key=True, hidden=True, default=uuid.uuid4, help_text='Unique ID for domain')
+    name = models.CharField(max_length=255, help_text='Enter domain name')
     def __str__(self):
         """String for representing the Model object."""
         return self.name

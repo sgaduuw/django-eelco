@@ -16,7 +16,7 @@ class Site(models.Model):
         return self.name
 
 class Sitedomain(models.Model):
-    id = models.UUIDField(primary_key=True, hidden=True, default=uuid.uuid4, help_text='Unique ID for domain')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for domain')
     name = models.CharField(max_length=255, help_text='Enter domain name')
     def __str__(self):
         """String for representing the Model object."""

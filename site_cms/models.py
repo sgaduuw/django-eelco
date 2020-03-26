@@ -25,8 +25,8 @@ class Author(models.Model):
         return self.name
 
 class Contenttype(models.IntegerChoices):
-        BLOG = 1
-        PAGE = 2
+    BLOG = 1
+    PAGE = 2
 
 class Attachment(models.Model):
     name = models.CharField(max_length=200, help_text='Enter file name')

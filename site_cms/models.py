@@ -45,6 +45,7 @@ class Content(models.Model):
     metadata = models.ForeignKey('ContentMeta', on_delete=models.SET_NULL, null=True)
     pub_notbefore = models.DateTimeField('Not before', null=True, blank=True)
     pub_notafter = models.DateTimeField('Not after', null=True, blank=True)
+    draft = models.BooleanField(default=True) 
     def __str__(self):
         """String for representing the Model object."""
         return self.body

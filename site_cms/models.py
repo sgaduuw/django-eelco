@@ -43,8 +43,8 @@ class Content(models.Model):
     body = models.TextField(help_text='Enter content here')
     attachments = models.ManyToManyField('Attachment', blank=True)
     metadata = models.ForeignKey('ContentMeta', on_delete=models.SET_NULL, null=True)
-    pub_notbefore = models.DateTimeField('Not before')
-    pub_notafter = models.DateTimeField('Not after')
+    pub_notbefore = models.DateTimeField('Not before', null=True, blank=True)
+    pub_notafter = models.DateTimeField('Not after', null=True, blank=True)
     def __str__(self):
         """String for representing the Model object."""
         return self.body

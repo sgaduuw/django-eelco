@@ -43,7 +43,6 @@ class Content(models.Model):
     body = models.TextField(help_text='Enter content here')
     attachments = models.ManyToManyField('Attachment', blank=True)
     pub_notbefore = models.DateTimeField('Not before', null=True, blank=True)
-    pub_notafter = models.DateTimeField('Not after', null=True, blank=True)
     draft = models.BooleanField(default=True) 
     def __str__(self):
         """String for representing the Model object."""

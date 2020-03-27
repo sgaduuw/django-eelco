@@ -38,7 +38,6 @@ class Attachment(models.Model):
 
 class Content(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for post')
-    siteinfo = models.ForeignKey('Siteinfo', on_delete=models.SET_NULL, null=True)
     metadata = models.ForeignKey('ContentMeta', on_delete=models.SET_NULL, null=True)
     ctype = models.IntegerField(choices=Contenttype.choices, verbose_name='Content type')
     body = models.TextField(help_text='Enter content here')
@@ -51,6 +50,7 @@ class Content(models.Model):
         return self.body
 
 class ContentMeta(models.Model):
+    siteinfo = models.ForeignKey('Siteinfo', on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=200, help_text='Enter taxonomy name')
     description = models.CharField(max_length=200, help_text='Enter taxonomy name')
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)

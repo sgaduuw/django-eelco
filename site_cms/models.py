@@ -72,6 +72,10 @@ class Tag(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=200, help_text='Enter Category name')
     description = models.CharField(max_length=200, help_text='Enter Category description')
+
+    class Meta:
+        verbose_name_plural = 'categories'
+
     def __str__(self):
         """String for representing the Model object."""
         return self.name

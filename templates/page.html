@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ content.title }}{% endblock %}
+{% block content %}
+Site: {{ content.siteinfo.name }}<br/>
+Title: {{ content.title }}<br/>
+Ctype: {{ content.ctype }}<br/>
+Body: {{ content.body }}<br/>
+Draft: {{ content.draft }}<br/>
+Slug: {{ content.slug }}<br/>
+Publishdate: {{ content.publishdate }}<br/>
+Description: {{ content.description }}<br/>
+Author: {{ content.author }}<br/>
+Tags: {{ content.tags.all }}<br/>
+Categories: {{ content.categories.all }}<br/>
+Image: {{ content.image }}<br/>
+{% endblock %}

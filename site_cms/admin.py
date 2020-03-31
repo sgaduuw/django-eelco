@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Siteinfo, Author, Tag, Category, Attachment, Content, ContentMeta
+from .models import Siteinfo, Author, Tag, Category, Attachment, Content
 
 class AuthorDisplay(admin.ModelAdmin):
     list_display = ('name', 'email', 'bio')

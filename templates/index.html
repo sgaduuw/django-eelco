@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Placeholder index page</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
-    Authors: {{ num_authors }}
-    Posts: {{ num_blog_posts }}
-    {% if post_list %}
-    <ul>
-        {% for post in post_list %}
-        <li>{{ post.metadata.author }} - {{ post.metadata.title }} - {{ post.metadata.siteinfo.name }} - {{ post.metadata.tags.all }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-  </body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}INDEX PAGE{% endblock %}
+
+{% block content %}
+  Authors: {{ num_authors }}
+  Posts: {{ num_blog_posts }}
+  {% if post_list %}
+  <ul>
+    {% for post in post_list %}
+    <li>{{ post.author }} - {{ post.slug }} - <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> - {{ post.siteinfo.name }} - {{ post.tags.all }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+{% endblock %}

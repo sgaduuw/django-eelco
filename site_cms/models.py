@@ -38,28 +38,27 @@ class Attachment(models.Model):
 
 class Content(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for post')
-    metadata = models.ForeignKey('ContentMeta', on_delete=models.SET_NULL, null=True)
+    siteinfo = models.ForeignKey('Siteinfo', on_delete=models.SET_NULL, null=True)
+    title = models.CharField(max_length=200, help_text='Enter taxonomy name')
+    #metadata = models.ForeignKey('ContentMeta', on_delete=models.SET_NULL, null=True)
     ctype = models.IntegerField(choices=Contenttype.choices, verbose_name='Content type')
     body = models.TextField(help_text='Enter content here')
     attachments = models.ManyToManyField('Attachment', blank=True)
-    pub_notbefore = models.DateTimeField('Not before', null=True, blank=True)
-    draft = models.BooleanField(default=True) 
-    def __str__(self):
-        """String for representing the Model object."""
-        return self.body
-
-class ContentMeta(models.Model):
-    siteinfo = models.ForeignKey('Siteinfo', on_delete=models.SET_NULL, null=True)
-    title = models.CharField(max_length=200, help_text='Enter taxonomy name')
+    draft = models.BooleanField(default=True)
+    slug = models.SlugField(max_length=250, help_text='Enter slug', blank=True)
+    publishdate = models.DateTimeField('Publish date', auto_now_add=True, blank=True)
     description = models.CharField(max_length=200, help_text='Enter taxonomy name')
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
-    slug = models.SlugField(max_length=50, help_text='Enter slug', blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
     categories = models.ManyToManyField('Category', blank=True)
     image = models.ImageField(upload_to='pageimage/%Y/%m/%d/', null=True, blank=True)
+
+    def get_absolute_url(self):
+        return f"/{self.slug}/"
+
     def __str__(self):
         """String for representing the Model object."""
-        return self.title
+        return self.body
 
 class Tag(models.Model):
     name = models.CharField(max_length=200, help_text='Enter Tag name')

@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from django.views import generic
 
-from site_cms.models import Content, Author, ContentMeta
+from site_cms.models import Content, Author
 
 def index(request):
     """ Front page placeholder """

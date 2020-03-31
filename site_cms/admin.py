@@ -10,11 +10,13 @@ class TagDisplay(admin.ModelAdmin):
 class CategoryDisplay(admin.ModelAdmin):
     list_display = ('name', 'description')
 
+class ContentAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
+
 # Register your models here.
 admin.site.register(Siteinfo)
 admin.site.register(Author, AuthorDisplay)
 admin.site.register(Tag, TagDisplay)
 admin.site.register(Category, CategoryDisplay)
 admin.site.register(Attachment)
-admin.site.register(Content)
-admin.site.register(ContentMeta)
+admin.site.register(Content,ContentAdmin)

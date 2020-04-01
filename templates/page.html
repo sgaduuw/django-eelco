@@ -2,6 +2,7 @@
 
 {% block title %}{{ content.title }}{% endblock %}
 {% block content %}
+Home: {% url 'index' %}<br/>
 Site: {{ content.siteinfo.name }}<br/>
 Title: {{ content.title }}<br/>
 Ctype: {{ content.ctype }}<br/>

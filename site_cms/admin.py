@@ -11,6 +11,17 @@ class CategoryDisplay(admin.ModelAdmin):
     list_display = ('name', 'description')
 
 class ContentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'draft', 'author', 'ctype', 'description', 'body'[:20])
+    fields = [
+        ('siteinfo'),
+        ('title', 'slug'), 
+        ('description', 'author'),
+        ('image'),
+        ('draft'),
+        ('body'),
+        ('attachments'),
+        ('categories', 'tags')
+    ]
     prepopulated_fields = {"slug": ("title",)}
 
 # Register your models here.

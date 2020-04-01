@@ -54,7 +54,7 @@ class Content(models.Model):
     image = models.ImageField(upload_to='pageimage/%Y/%m/%d/', null=True, blank=True)
 
     def get_absolute_url(self):
-        return f"/{self.slug}/"
+        return reverse('page', args=[str(self.slug)])
 
     def __str__(self):
         """String for representing the Model object."""

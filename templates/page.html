@@ -2,7 +2,7 @@
 
 {% block title %}{{ content.title }}{% endblock %}
 {% block content %}
-Home: {% url 'index' %}<br/>
+Home: <a href="{% url 'index' %}">{% url 'index' %}</a><br/>
 Site: {{ content.siteinfo.name }}<br/>
 Title: {{ content.title }}<br/>
 Ctype: {{ content.ctype }}<br/>

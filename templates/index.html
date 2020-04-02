@@ -3,13 +3,24 @@
 {% block title %}INDEX PAGE{% endblock %}
 
 {% block content %}
-  Authors: {{ num_authors }}
-  Posts: {{ num_blog_posts }}
-  {% if post_list %}
+  Blog posts: {{ num_blog_posts }}<br/>
+  Page posts: {{ num_page_posts }}<br/>
+  Authors: {{ num_authors }}<br/>
+  
+  Blog posts, non-draft:
   <ul>
-    {% for post in post_list %}
+    {% for post in blog_post_list %}
     <li>{{ post.author }} - {{ post.slug }} - <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> - {{ post.siteinfo.name }} - {{ post.tags.all }}</li>
+    {% empty %}
+    No blogs that are published.
     {% endfor %}
   </ul>
-  {% endif %}
+  Pages, non-draft:
+  <ul>
+    {% for post in page_post_list %}
+    <li>{{ post.author }} - {{ post.slug }} - <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> - {{ post.siteinfo.name }} - {{ post.tags.all }}</li>
+    {% empty %}
+    <li>No pages that are published</li>
+    {% endfor %}
+  </ul>
 {% endblock %}

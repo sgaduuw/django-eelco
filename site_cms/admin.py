@@ -19,7 +19,7 @@ class ContentAdmin(admin.ModelAdmin):
         ('image'),
         ('draft'),
         ('body'),
-        ('attachments'),
+        ('ctype', 'attachments'),
         ('categories', 'tags')
     ]
     prepopulated_fields = {"slug": ("title",)}

@@ -52,8 +52,12 @@ class Content(models.Model):
     categories = models.ManyToManyField('Category', blank=True)
     image = models.ImageField(upload_to='pageimage/%Y/%m/%d/', null=True, blank=True)
 
+    def get_year(self):
+        return self.publishdate.year
+
     def get_absolute_url(self):
-        return reverse('page', args=[str(self.slug)])
+        #return reverse('page', args=[str(self.slug)])
+        return reverse('blog', kwargs={'year': self.get_year(), 'slug': self.slug})
 
     def __str__(self):
         """String for representing the Model object."""

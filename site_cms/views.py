@@ -6,19 +6,42 @@ from site_cms.models import Content, Author
 
 def index(request):
     """ Front page placeholder """
-    num_blog_posts = Content.objects.count()
-    post_list = Content.objects.all()
+    num_blog_posts = Content.objects.filter(ctype='1').count()
+    num_page_posts = Content.objects.filter(ctype='2').count()
+    blog_post_list = Content.objects.filter(ctype='1',draft=False)
+    page_post_list = Content.objects.filter(ctype='2',draft=False)
     num_authors = Author.objects.count()
 
     context = {
         'num_blog_posts': num_blog_posts,
+        'num_page_posts': num_page_posts,
         'num_authors': num_authors,
-        'post_list': post_list,
+        'blog_post_list': blog_post_list,
+        'page_post_list': page_post_list,
     }
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
-class BlogPostView(generic.DetailView):
-    model = Content
-    template_name = 'page.html'
+def author(request):
+
+    context = {
+        'slug': slug,
+    }
+    return render(request, 'author.html', context=context)
+
+def page(request, slug):
+
+    context = {
+        'slug': slug,
+    }
+    return render(request, 'page.html', context=context)
+
+def blog(request, year, slug):
+
+    context = {
+        'year': year,
+        'slug': slug,
+    }
+    return render(request, 'blog.html', context=context)
+

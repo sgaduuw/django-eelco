@@ -23,10 +23,10 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
-def author(request):
-
+def author(request, author):
+    author = Content.objects.filter(author__name__iexact=author)
     context = {
-        'slug': slug,
+        'author': author,
     }
     return render(request, 'author.html', context=context)
 

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ content.author.name }}{% endblock %}
+{% block content %}
+This is author template<br/>
+AAP: {{ author }}<br/>
+Home: <a href="{% url 'index' %}">{% url 'index' %}</a><br/>
+Name: {{ content.author.name }}<br/>
+Bio: {{ content.author.bio }}<br/>
+{% endblock %}

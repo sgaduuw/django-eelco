@@ -11,13 +11,13 @@ class CategoryDisplay(admin.ModelAdmin):
     list_display = ('name', 'description')
 
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ('title', 'contentstatus', 'author', 'ctype', 'description', 'body'[:20])
+    list_display = ('title', 'contentstatus', 'publishdate', 'author', 'ctype', 'description', 'body'[:20])
     fields = [
         ('siteinfo'),
         ('title', 'slug'), 
         ('description', 'author'),
         ('image'),
-        ('contentstatus'),
+        ('contentstatus', 'publishdate'),
         ('body'),
         ('ctype', 'attachments'),
         ('categories', 'tags')

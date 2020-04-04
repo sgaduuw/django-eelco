@@ -39,8 +39,12 @@ def page(request, slug):
 
 def blog(request, year, slug):
 
+    content = Content.objects.get(slug=slug, publishdate__year=str(year))
+
     context = {
         'year': year,
         'slug': slug,
+        'content': content,
     }
+
     return render(request, 'blog.html', context=context)

@@ -17,3 +17,6 @@ Tags: {{ content.tags.all }}<br/>
 Categories: {{ content.categories.all }}<br/>
 Image: {{ content.image }}<br/>
 {% endblock %}
+
+{% block copyright %}{{ content.siteinfo.copyright|safe }}{% endblock %}
+{% block footer %}{{ content.siteinfo.footer|safe }}{% endblock %}

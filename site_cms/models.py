@@ -12,8 +12,8 @@ class Siteinfo(models.Model):
     tagline = models.CharField(max_length=200, help_text='Enter site tagline')
     domains = models.ManyToManyField(Site)
     description = models.CharField(max_length=200, help_text='Enter site description')
-    copyright = models.CharField(max_length=200, help_text='Enter site copyright')
-    footer = models.CharField(max_length=200, help_text='Enter site copyright footer')
+    copyright = models.CharField(null=True, blank=True, max_length=200, help_text='Enter site copyright')
+    footer = models.CharField(null=True, blank=True, max_length=200, help_text='Enter site copyright footer')
     def __str__(self):
         """String for representing the Model object."""
         return self.name

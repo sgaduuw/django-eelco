@@ -44,4 +44,3 @@ def blog(request, year, slug):
         'slug': slug,
     }
     return render(request, 'blog.html', context=context)
-

@@ -3,24 +3,42 @@
 {% block title %}INDEX PAGE{% endblock %}
 
 {% block content %}
-  Blog posts: {{ num_blog_posts }}<br/>
-  Page posts: {{ num_page_posts }}<br/>
-  Authors: {{ num_authors }}<br/>
+  {% for post in blog_post_list %}
+        <div class="col-xs-12 col-md-6 col-lg-4 pb-3 px-2 align-self-stretch d-flex align-items-stretch">
+          <div class="card mx-0 post-card">
+            <div class="card-body">
+              <h4 class="card-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+              <p class="card-text">
+                In this post I try to describe how to get up and running with Spring with raw Websockets and angular2.
+              </p>
+            </div>
+            <div class="card-footer recentpost">
+              <small class="text-muted">
+                <time datetime="1818 July 18017">18 Jan, 2016</time>
+              </small>
+            </div>  
+          </div>
+        </div>
+  {% endfor %}
   
-  Blog posts, non-draft:
-  <ul>
-    {% for post in blog_post_list %}
-    <li>{{ post.author }} - {{ post.slug }} - <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> - {{ post.siteinfo.name }} - {{ post.tags.all }}</li>
-    {% empty %}
-    No blogs that are published.
-    {% endfor %}
-  </ul>
-  Pages, non-draft:
-  <ul>
-    {% for post in page_post_list %}
-    <li>{{ post.author }} - {{ post.slug }} - <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> - {{ post.siteinfo.name }} - {{ post.tags.all }}</li>
-    {% empty %}
-    <li>No pages that are published</li>
-    {% endfor %}
-  </ul>
+  {% for post in page_post_list %}
+        <div class="col-xs-12 col-md-6 col-lg-4 pb-3 px-2 align-self-stretch d-flex align-items-stretch">
+          <div class="card mx-0 post-card">
+            <div class="card-body">
+              <h4 class="card-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+              <p class="card-text">
+                In this post I try to describe how to get up and running with Spring with raw Websockets and angular2.
+              </p>
+            </div>
+            <div class="card-footer recentpost">
+              <small class="text-muted">
+                <time datetime="1818 July 18017">18 Jan, 2016</time>
+              </small>
+            </div>  
+          </div>
+        </div>
+  {% endfor %}
 {% endblock %}
+
+{% block copyright %}{{ content.siteinfo.copyright|safe }}{% endblock %}
+{% block footer %}{{ content.siteinfo.footer|safe }}{% endblock %}

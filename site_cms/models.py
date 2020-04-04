@@ -60,12 +60,14 @@ class Content(models.Model):
         return self.publishdate.year
 
     def get_absolute_url(self):
-        #return reverse('page', args=[str(self.slug)])
-        return reverse('blog', kwargs={'year': self.get_year(), 'slug': self.slug})
+        if self.ctype == 1:
+            return reverse('blog', kwargs={'year': self.get_year(), 'slug': self.slug})
+        elif self.ctype == 2:
+            return reverse('page', kwargs={'slug': self.slug})
 
     def __str__(self):
         """String for representing the Model object."""
-        return self.body
+        return self.title
 
 class Tag(models.Model):
     name = models.CharField(max_length=200, help_text='Enter Tag name')

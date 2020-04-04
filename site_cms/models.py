@@ -51,12 +51,15 @@ class Content(models.Model):
     attachments = models.ManyToManyField('Attachment', blank=True)
     contentstatus = models.IntegerField(choices=ContentStatus.choices, verbose_name='Content status')
     slug = models.SlugField(max_length=250, help_text='Enter slug', blank=True)
-    publishdate = models.DateTimeField('Publish date', auto_now_add=True, blank=True)
+    publishdate = models.DateTimeField('Publish date')
     description = models.CharField(max_length=200, help_text='Enter taxonomy name')
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField('Tag', blank=True)
     categories = models.ManyToManyField('Category', blank=True)
     image = models.ImageField(upload_to='pageimage/%Y/%m/%d/', null=True, blank=True)
+
+    class Meta: 
+        ordering = ['-publishdate']
 
     def get_year(self):
         return self.publishdate.year

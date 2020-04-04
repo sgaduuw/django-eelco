@@ -28,6 +28,10 @@ class Contenttype(models.IntegerChoices):
     BLOG = 1
     PAGE = 2
 
+class ContentStatus(models.IntegerChoices):
+    DRAFT = 1
+    PUBLISHED = 2
+
 class Attachment(models.Model):
     name = models.CharField(max_length=200, help_text='Enter file name')
     fpath = models.FileField(upload_to='uploads/%Y/%m/%d/')
@@ -43,7 +47,7 @@ class Content(models.Model):
     ctype = models.IntegerField(choices=Contenttype.choices, verbose_name='Content type')
     body = models.TextField(help_text='Enter content here')
     attachments = models.ManyToManyField('Attachment', blank=True)
-    draft = models.BooleanField(default=True)
+    contentstatus = models.IntegerField(choices=ContentStatus.choices, verbose_name='Content status')
     slug = models.SlugField(max_length=250, help_text='Enter slug', blank=True)
     publishdate = models.DateTimeField('Publish date', auto_now_add=True, blank=True)
     description = models.CharField(max_length=200, help_text='Enter taxonomy name')

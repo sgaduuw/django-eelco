@@ -11,7 +11,10 @@ class CategoryDisplay(admin.ModelAdmin):
     list_display = ('name', 'description')
 
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ('title', 'contentstatus', 'publishdate', 'author', 'ctype', 'description', 'body'[:20])
+    def limited_bodytext(self):
+        return self.body[:60]
+
+    list_display = ('title', 'contentstatus', 'publishdate', 'author', 'ctype', 'description', limited_bodytext)
     fields = [
         ('siteinfo'),
         ('title', 'slug'), 

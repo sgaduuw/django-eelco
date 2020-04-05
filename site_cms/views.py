@@ -6,16 +6,11 @@ from site_cms.models import Content, Author
 
 def index(request):
     """ Front page placeholder """
-    num_blog_posts = Content.objects.filter(ctype='1').count()
-    num_page_posts = Content.objects.filter(ctype='2').count()
     blog_post_list = Content.objects.filter(ctype='1', contentstatus='2')
     page_post_list = Content.objects.filter(ctype='2', contentstatus='2')
-    num_authors = Author.objects.count()
-
+    content = Content.objects.all()
+    
     context = {
-        'num_blog_posts': num_blog_posts,
-        'num_page_posts': num_page_posts,
-        'num_authors': num_authors,
         'blog_post_list': blog_post_list,
         'page_post_list': page_post_list,
     }

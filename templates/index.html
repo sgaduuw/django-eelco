@@ -9,12 +9,12 @@
             <div class="card-body">
               <h4 class="card-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
               <p class="card-text">
-                In this post I try to describe how to get up and running with Spring with raw Websockets and angular2.
+                {{ post.body|truncatewords:15 }}
               </p>
             </div>
             <div class="card-footer recentpost">
               <small class="text-muted">
-                <time datetime="1818 July 18017">18 Jan, 2016</time>
+                <time datetime="{{ post.publishdate }}">{{ post.publishdate }}</time>
               </small>
             </div>  
           </div>
@@ -27,7 +27,7 @@
             <div class="card-body">
               <h4 class="card-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
               <p class="card-text">
-                In this post I try to describe how to get up and running with Spring with raw Websockets and angular2.
+                {{ post.body|truncatewords:15 }}
               </p>
             </div>
             <div class="card-footer recentpost">

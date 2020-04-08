@@ -48,9 +48,18 @@ def blog(request, year, slug):
 
 def tag_list(request):
     """ Tag listing """
-    tags = Tag.objects.all()
-    
+    def get_tag_postcount(tagname):
+        postcount = Content.objects.filter(tags__name__iexact=tagname).count()
+        return postcount
+
+    tags = {}
+    for tag in Tag.objects.all():
+        tags[tag.name] = {}
+        tags[tag.name]['description'] = tag.description
+        tags[tag.name]['count'] = get_tag_postcount(tagname=tag)
+
     context = {
+        'listingheader': 'Tags',
         'tags': tags,
     }
 

@@ -46,42 +46,32 @@ def blog(request, year, slug):
 
     return render(request, 'blog.html', context=context)
 
-def tag_list(request):
-    """ Tag listing """
-    def get_tag_postcount(tagname):
-        postcount = Content.objects.filter(tags__name__iexact=tagname).count()
+def taxonomy_list(request, taxonomy_type):
+    """ Taxonomy listing """
+    if taxonomy_type == 'tags':
+        q = Tag.objects.all()
+    elif taxonomy_type == 'categories':
+        q = Category.objects.all()
+
+    def get_cat_postcount(taxonomy):
+        if taxonomy_type == 'tags':
+            postcount = Content.objects.filter(tags__name__iexact=taxonomy).count()
+        elif taxonomy_type == 'categories':
+            postcount = Content.objects.filter(categories__name__iexact=taxonomy).count()
         return postcount
 
-    tags = {}
-    for tag in Tag.objects.all():
-        tags[tag.name] = {}
-        tags[tag.name]['description'] = tag.description
-        tags[tag.name]['count'] = get_tag_postcount(tagname=tag)
+    taxonomy = {}
+    for tax in q:
+        taxonomy[tax.name] = {}
+        taxonomy[tax.name]['description'] = tax.description
+        taxonomy[tax.name]['count'] = get_cat_postcount(tax.name)
 
     context = {
-        'listingheader': 'Tags',
-        'tags': tags,
+        'listingheader': taxonomy_type,
+        'taxonomy': taxonomy,
     }
 
-    # Render the HTML template index.html with the data in the context variable
-    return render(request, 'tags.html', context=context)
-
-def category_list(request):
-    """ Category listing """
-    def get_cat_postcount(category):
-        postcount = Content.objects.filter(categories__name__iexact=category).count()
-        return postcount
-
-    categories = {}
-    for cat in Tag.objects.all():
-        categories[cat.name] = {}
-        categories[cat.name]['description'] = cat.description
-        categories[cat.name]['count'] = get_cat_postcount(category)
-
-    context = {
-        'listingheader': 'Categories',
-        'tags': tags,
-    }
+    return render(request, 'taxonomies.html', context=context)
 
 def taxonomy_detail(request, taxonomy, taxonomy_type):
     """ Single taxonomy page """

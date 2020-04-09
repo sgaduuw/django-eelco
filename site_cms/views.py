@@ -66,13 +66,31 @@ def tag_list(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'tags.html', context=context)
 
-def tag_detail(request, tag):
-    """ Single tag page """
-    tag = Tag.objects.filter(name=tag)
+def category_list(request):
+    """ Category listing """
+    def get_cat_postcount(category):
+        postcount = Content.objects.filter(categories__name__iexact=category).count()
+        return postcount
+
+    categories = {}
+    for cat in Tag.objects.all():
+        categories[cat.name] = {}
+        categories[cat.name]['description'] = cat.description
+        categories[cat.name]['count'] = get_cat_postcount(category)
 
     context = {
-        'tag': tag,
+        'listingheader': 'Categories',
+        'tags': tags,
+    }
+
+def taxonomy_detail(request, taxonomy, taxonomy_type):
+    """ Single taxonomy page """
+    taxonomy = Tag.objects.filter(name=taxonomy)
+
+    context = {
+        'taxonomy_type': taxonomy_type,
+        'taxonomy': taxonomy,
     }
 
     # Render the HTML template index.html with the data in the context variable
-    return render(request, 'tag_detail.html', context=context)
+    return render(request, 'taxonomy_detail.html', context=context)

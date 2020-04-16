@@ -73,13 +73,17 @@ def taxonomy_list(request, taxonomy_type):
 
     return render(request, 'taxonomy_list.html', context=context)
 
-def taxonomy_detail(request, taxonomy, taxonomy_type):
+def taxonomy_detail(request, taxonomy_name, taxonomy_type):
     """ Single taxonomy page """
-    taxonomy = Tag.objects.filter(name=taxonomy)
+    if taxonomy_type == 'tag':
+        content = Content.objects.filter(ctype='1', tags__name__iexact=taxonomy_name)
+    elif taxonomy_type == 'category':
+        content = Content.objects.filter(ctype='2', categories__name__iexact=taxonomy_name)
 
     context = {
+        'listingheader': taxonomy_name,
         'taxonomy_type': taxonomy_type,
-        'taxonomy': taxonomy,
+        'content': content,
     }
 
     # Render the HTML template index.html with the data in the context variable

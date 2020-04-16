@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  SECRET_KEY: 111111111111111111111111111111111111111111111111
+
 jobs:
   build:
 

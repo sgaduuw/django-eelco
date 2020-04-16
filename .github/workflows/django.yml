@@ -6,18 +6,15 @@ on:
   pull_request:
     branches: [ master ]
 
-env:
-  SECRET_KEY: 111111111111111111111111111111111111111111111111
-
 jobs:
   build:
-
+    env:
+      SECRET_KEY: 111111111111111111111111111111111111111111111111
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.8]
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}

@@ -23,7 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get('DJANGO_PRODUCTION') == 'true':
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -75,24 +78,10 @@ WSGI_APPLICATION = 'django_eelco.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# dj_database_url.config() parses the DATABASE_URL environment variable
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-    }
+    'default': dj_database_url.config(conn_max_age=600)
 }
-DATABASES['default'] = dj_database_url.config(env='DEV_DB_URL', conn_max_age=600)
-
-if os.environ.get('DJANGO_PRODUCTION') == 'true':
-    DEBUG = False
-    POSTGRES_URL = 'postgres://{}:{}@{}:{}/{}'.format(
-            os.environ.get('POSTGRES_USER'),
-            os.environ.get('POSTGRES_PASSWORD'),
-            os.environ.get('POSTGRES_HOST'),
-            os.environ.get('POSTGRES_PORT'),
-            os.environ.get('POSTGRES_DB')
-    )
-    # SECURITY WARNING: don't run with debug turned on in production!
-    DATABASES['default'] = dj_database_url.parse(POSTGRES_URL, conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

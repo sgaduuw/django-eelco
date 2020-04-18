@@ -48,15 +48,15 @@ def blog(request, year, slug):
 
 def taxonomy_list_all(request, taxonomy_type):
     """ Taxonomy listing """
-    if taxonomy_type == 'tags':
+    if taxonomy_type == 'tag':
         q = Tag.objects.all()
-    elif taxonomy_type == 'categories':
+    elif taxonomy_type == 'category':
         q = Category.objects.all()
 
     def get_cat_postcount(taxonomy):
-        if taxonomy_type == 'tags':
+        if taxonomy_type == 'tag':
             postcount = Content.objects.filter(tags__name__iexact=taxonomy).count()
-        elif taxonomy_type == 'categories':
+        elif taxonomy_type == 'category':
             postcount = Content.objects.filter(categories__name__iexact=taxonomy).count()
         return postcount
 

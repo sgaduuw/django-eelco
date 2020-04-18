@@ -11,7 +11,7 @@ def index(request):
     content = Content.objects.all()
     
     context = {
-        'listingheader': 'Blog',
+        'listingheader': 'blog',
         'blog_post_list': blog_post_list,
         'page_post_list': page_post_list,
     }

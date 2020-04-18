@@ -12,8 +12,8 @@ class Siteinfo(models.Model):
     tagline = models.CharField(max_length=200, help_text='Enter site tagline')
     domains = models.ManyToManyField(Site)
     description = models.CharField(max_length=200, help_text='Enter site description')
-    copyright = models.CharField(null=True, blank=True, max_length=200, help_text='Enter site copyright')
-    footer = models.CharField(null=True, blank=True, max_length=200, help_text='Enter site copyright footer')
+    copyright = models.CharField(null=True, blank=True, max_length=200, help_text='Enter site copyright line 1')
+    footer = models.CharField(null=True, blank=True, max_length=200, help_text='Enter site copyright line 2')
     def __str__(self):
         """String for representing the Model object."""
         return self.name
@@ -45,14 +45,14 @@ class Attachment(models.Model):
 class Content(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for post')
     siteinfo = models.ForeignKey('Siteinfo', on_delete=models.SET_NULL, null=True)
-    title = models.CharField(max_length=200, help_text='Enter taxonomy name')
+    title = models.CharField(max_length=200, help_text='Enter title')
     ctype = models.IntegerField(choices=Contenttype.choices, verbose_name='Content type')
     body = models.TextField(help_text='Enter content here')
     attachments = models.ManyToManyField('Attachment', blank=True)
     contentstatus = models.IntegerField(choices=ContentStatus.choices, verbose_name='Content status')
     slug = models.SlugField(max_length=250, help_text='Enter slug', blank=True)
     publishdate = models.DateTimeField('Publish date')
-    description = models.CharField(max_length=200, help_text='Enter taxonomy name')
+    description = models.CharField(max_length=200, help_text='Enter description')
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField('Tag', blank=True)
     categories = models.ManyToManyField('Category', blank=True)

@@ -1,3 +1,28 @@
 {% extends 'list_base.html' %}
 
 {% block title %}TAGS PAGE{% endblock %}
+
+{% block content %}
+  {% for post in content %}
+        <div class="col-xs-12 col-md-6 col-lg-4 pb-3 px-2 align-self-stretch d-flex align-items-stretch">
+          <div class="card mx-0 post-card">
+            <div class="card-body">
+              <h4 class="card-title"><a href="/tag/{{ a_tag }}">{{ post.title }}</a></h4>
+              <p class="card-text">
+                {{ post.body|safe|truncatewords:15 }}
+              </p>
+            </div>
+            <div class="card-footer recentpost">
+              <small class="text-muted">
+                <time datetime="{{ post.publishdate }}">{{ post.publishdate }}</time>
+              </small>
+            </div>  
+          </div>
+        </div>
+  {% empty %}
+        Sorry, none found.
+  {% endfor %}
+{% endblock %}
+
+{% block copyright %}{{ content.siteinfo.copyright|safe }}{% endblock %}
+{% block footer %}{{ content.siteinfo.footer|safe }}{% endblock %}

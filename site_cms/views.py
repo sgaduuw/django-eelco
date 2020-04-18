@@ -78,10 +78,10 @@ def taxonomy_list_single(request, taxonomy_name, taxonomy_type):
     if taxonomy_type == 'tag':
         content = Content.objects.filter(ctype='1', tags__name__iexact=taxonomy_name)
     elif taxonomy_type == 'category':
-        content = Content.objects.filter(ctype='2', categories__name__iexact=taxonomy_name)
+        content = Content.objects.filter(ctype='1', categories__name__iexact=taxonomy_name)
 
     context = {
-        'listingheader': taxonomy_name,
+        'listingheader': taxonomy_type + ": " + taxonomy_name,
         'taxonomy_type': taxonomy_type,
         'content': content,
     }

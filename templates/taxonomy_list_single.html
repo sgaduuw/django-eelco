@@ -7,7 +7,7 @@
         <div class="col-xs-12 col-md-6 col-lg-4 pb-3 px-2 align-self-stretch d-flex align-items-stretch">
           <div class="card mx-0 post-card">
             <div class="card-body">
-              <h4 class="card-title"><a href="/tag/{{ a_tag }}">{{ post.title }}</a></h4>
+              <h4 class="card-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
               <p class="card-text">
                 {{ post.body|safe|truncatewords:15 }}
               </p>

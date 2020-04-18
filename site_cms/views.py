@@ -71,7 +71,7 @@ def taxonomy_list(request, taxonomy_type):
         'taxonomy': taxonomy,
     }
 
-    return render(request, 'taxonomy_list.html', context=context)
+    return render(request, 'taxonomy_list_all.html', context=context)
 
 def taxonomy_detail(request, taxonomy_name, taxonomy_type):
     """ Single taxonomy page """
@@ -87,4 +87,4 @@ def taxonomy_detail(request, taxonomy_name, taxonomy_type):
     }
 
     # Render the HTML template index.html with the data in the context variable
-    return render(request, 'taxonomy_detail.html', context=context)
+    return render(request, 'taxonomy_list_single.html', context=context)

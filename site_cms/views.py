@@ -60,6 +60,9 @@ def taxonomy_list_all(request, taxonomy_type):
             postcount = Content.objects.filter(categories__name__iexact=taxonomy).count()
         return postcount
 
+    def get_listing_header():
+        return 'tags' if taxonomy_type == 'tag' else 'categories'
+
     taxonomy = {}
     for tax in q:
         taxonomy[tax.name] = {}
@@ -67,7 +70,8 @@ def taxonomy_list_all(request, taxonomy_type):
         taxonomy[tax.name]['count'] = get_cat_postcount(tax.name)
 
     context = {
-        'listingheader': taxonomy_type,
+        'listingheader': get_listing_header(),
+        'taxonomy_type': taxonomy_type,
         'taxonomy': taxonomy,
     }
 

@@ -4,10 +4,10 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
 
-    path('tags/', views.taxonomy_list_all, { 'taxonomy_type': 'tags' }),
+    path('tags/', views.taxonomy_list_all, { 'taxonomy_type': 'tag' }),
     path('tag/<slug:taxonomy_name>/', views.taxonomy_list_single, { 'taxonomy_type': 'tag' }),
 
-    path('categories/', views.taxonomy_list_all, { 'taxonomy_type': 'categories' }),
+    path('categories/', views.taxonomy_list_all, { 'taxonomy_type': 'category' }),
     path('category/<slug:taxonomy_name>/', views.taxonomy_list_single, { 'taxonomy_type': 'category' }),
 
     path('author/<slug:author>', views.author, name='author'),

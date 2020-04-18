@@ -46,7 +46,7 @@ def blog(request, year, slug):
 
     return render(request, 'blog.html', context=context)
 
-def taxonomy_list(request, taxonomy_type):
+def taxonomy_list_all(request, taxonomy_type):
     """ Taxonomy listing """
     if taxonomy_type == 'tags':
         q = Tag.objects.all()
@@ -73,7 +73,7 @@ def taxonomy_list(request, taxonomy_type):
 
     return render(request, 'taxonomy_list_all.html', context=context)
 
-def taxonomy_detail(request, taxonomy_name, taxonomy_type):
+def taxonomy_list_single(request, taxonomy_name, taxonomy_type):
     """ Single taxonomy page """
     if taxonomy_type == 'tag':
         content = Content.objects.filter(ctype='1', tags__name__iexact=taxonomy_name)

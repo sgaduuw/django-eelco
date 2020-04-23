@@ -6,12 +6,12 @@ from site_cms.models import Content, Author, Tag, Category
 
 def index(request):
     """ Front page listing """
-    blog_post_list = Content.objects.filter(ctype='1', contentstatus='2')
-    page_post_list = Content.objects.filter(ctype='2', contentstatus='2')
-    content = Content.objects.all()
+    blog_post_list = Content.objects.filter(ctype='1', contentstatus='2', siteinfo__domains=request.site)
+    page_post_list = Content.objects.filter(ctype='2', contentstatus='2', siteinfo__domains=request.site)
+    content = Content.objects.filter(siteinfo__domains=request.site)
     
     context = {
-        'listingheader': 'blog',
+        'listingheader': 'blog' + str(request.site),
         'blog_post_list': blog_post_list,
         'page_post_list': page_post_list,
     }

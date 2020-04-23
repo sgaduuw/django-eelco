@@ -80,9 +80,9 @@ def taxonomy_list_all(request, taxonomy_type):
 def taxonomy_list_single(request, taxonomy_name, taxonomy_type):
     """ Single taxonomy page """
     if taxonomy_type == 'tag':
-        content = Content.objects.filter(ctype='1', tags__name__iexact=taxonomy_name)
+        content = Content.objects.filter(ctype='1', tags__name__iexact=taxonomy_name, siteinfo__domains=request.site)
     elif taxonomy_type == 'category':
-        content = Content.objects.filter(ctype='1', categories__name__iexact=taxonomy_name)
+        content = Content.objects.filter(ctype='1', categories__name__iexact=taxonomy_name, siteinfo__domains=request.site)
 
     context = {
         'listingheader': taxonomy_type + ": " + taxonomy_name,

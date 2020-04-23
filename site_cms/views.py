@@ -6,12 +6,12 @@ from site_cms.models import Content, Author, Tag, Category
 
 def index(request):
     """ Front page listing """
-    blog_post_list = Content.objects.filter(ctype='1', contentstatus='2')
-    page_post_list = Content.objects.filter(ctype='2', contentstatus='2')
-    content = Content.objects.all()
+    blog_post_list = Content.objects.filter(ctype='1', contentstatus='2', siteinfo__domains=request.site)
+    page_post_list = Content.objects.filter(ctype='2', contentstatus='2', siteinfo__domains=request.site)
+    content = Content.objects.filter(siteinfo__domains=request.site)
     
     context = {
-        'listingheader': 'blog',
+        'listingheader': 'blog' + str(request.site),
         'blog_post_list': blog_post_list,
         'page_post_list': page_post_list,
     }
@@ -21,7 +21,7 @@ def index(request):
 
 def author(request, author):
     """ Author page """
-    author = Content.objects.filter(author__name__iexact=author)
+    author = Content.objects.filter(author__name__iexact=author, siteinfo__domains=request.site)
     context = {
         'author': author,
     }
@@ -36,7 +36,7 @@ def page(request, slug):
 
 def blog(request, year, slug):
     """ Blog page """
-    content = Content.objects.get(slug=slug, publishdate__year=str(year))
+    content = Content.objects.get(slug=slug, publishdate__year=str(year), siteinfo__domains=request.site)
 
     context = {
         'year': year,
@@ -49,15 +49,15 @@ def blog(request, year, slug):
 def taxonomy_list_all(request, taxonomy_type):
     """ Taxonomy listing """
     if taxonomy_type == 'tag':
-        q = Tag.objects.all()
+        q = Tag.objects.filter(site=request.site)
     elif taxonomy_type == 'category':
-        q = Category.objects.all()
+        q = Category.objects.filter(site=request.site)
 
     def get_cat_postcount(taxonomy):
         if taxonomy_type == 'tag':
-            postcount = Content.objects.filter(tags__name__iexact=taxonomy).count()
+            postcount = Content.objects.filter(tags__name__iexact=taxonomy, siteinfo__domains=request.site).count()
         elif taxonomy_type == 'category':
-            postcount = Content.objects.filter(categories__name__iexact=taxonomy).count()
+            postcount = Content.objects.filter(categories__name__iexact=taxonomy, siteinfo__domains=request.site).count()
         return postcount
 
     def get_listing_header():
@@ -80,9 +80,9 @@ def taxonomy_list_all(request, taxonomy_type):
 def taxonomy_list_single(request, taxonomy_name, taxonomy_type):
     """ Single taxonomy page """
     if taxonomy_type == 'tag':
-        content = Content.objects.filter(ctype='1', tags__name__iexact=taxonomy_name)
+        content = Content.objects.filter(ctype='1', tags__name__iexact=taxonomy_name, siteinfo__domains=request.site)
     elif taxonomy_type == 'category':
-        content = Content.objects.filter(ctype='1', categories__name__iexact=taxonomy_name)
+        content = Content.objects.filter(ctype='1', categories__name__iexact=taxonomy_name, siteinfo__domains=request.site)
 
     context = {
         'listingheader': taxonomy_type + ": " + taxonomy_name,

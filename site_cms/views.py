@@ -49,15 +49,15 @@ def blog(request, year, slug):
 def taxonomy_list_all(request, taxonomy_type):
     """ Taxonomy listing """
     if taxonomy_type == 'tag':
-        q = Tag.objects.all()
+        q = Tag.objects.filter(site=request.site)
     elif taxonomy_type == 'category':
-        q = Category.objects.all()
+        q = Category.objects.filter(site=request.site)
 
     def get_cat_postcount(taxonomy):
         if taxonomy_type == 'tag':
-            postcount = Content.objects.filter(tags__name__iexact=taxonomy).count()
+            postcount = Content.objects.filter(tags__name__iexact=taxonomy, siteinfo__domains=request.site).count()
         elif taxonomy_type == 'category':
-            postcount = Content.objects.filter(categories__name__iexact=taxonomy).count()
+            postcount = Content.objects.filter(categories__name__iexact=taxonomy, siteinfo__domains=request.site).count()
         return postcount
 
     def get_listing_header():

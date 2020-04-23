@@ -36,7 +36,7 @@ def page(request, slug):
 
 def blog(request, year, slug):
     """ Blog page """
-    content = Content.objects.get(slug=slug, publishdate__year=str(year))
+    content = Content.objects.get(slug=slug, publishdate__year=str(year), siteinfo__domains=request.site)
 
     context = {
         'year': year,

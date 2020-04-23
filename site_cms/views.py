@@ -21,7 +21,7 @@ def index(request):
 
 def author(request, author):
     """ Author page """
-    author = Content.objects.filter(author__name__iexact=author)
+    author = Content.objects.filter(author__name__iexact=author, siteinfo__domains=request.site)
     context = {
         'author': author,
     }

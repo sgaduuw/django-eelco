@@ -42,6 +42,7 @@ def blog(request, year, slug):
         'year': year,
         'slug': slug,
         'content': content,
+        'full_canonical_url': request.build_absolute_uri
     }
 
     return render(request, 'blog.html', context=context)

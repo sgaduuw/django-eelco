@@ -29,19 +29,25 @@ def author(request, author):
 
 def page(request, slug):
     """ 'static' page """
+    content = Content.objects.get(slug=slug, ctype='2', siteinfo__domains=request.site)
+
     context = {
         'slug': slug,
+        'content': content,
+        'full_canonical_url': request.build_absolute_uri
     }
+    
     return render(request, 'page.html', context=context)
 
 def blog(request, year, slug):
     """ Blog page """
-    content = Content.objects.get(slug=slug, publishdate__year=str(year), siteinfo__domains=request.site)
+    content = Content.objects.get(slug=slug, publishdate__year=str(year), ctype='1', siteinfo__domains=request.site)
 
     context = {
         'year': year,
         'slug': slug,
         'content': content,
+        'full_canonical_url': request.build_absolute_uri
     }
 
     return render(request, 'blog.html', context=context)

@@ -11,7 +11,7 @@ def index(request):
     content = Content.objects.filter(siteinfo__domains=request.site)
     
     context = {
-        'listingheader': 'blog' + str(request.site),
+        'listingheader': 'blog: ' + str(request.site),
         'blog_post_list': blog_post_list,
         'page_post_list': page_post_list,
     }
